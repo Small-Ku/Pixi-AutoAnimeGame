@@ -1,0 +1,49 @@
+[project]
+authors = ["Small_Ku <small_ku@outlook.com>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "Pixi-AutoAnimeGame"
+platforms = ["win-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = ">=3.11"
+pyside6 = "==6.8.0.2" # pin to avoid issues with pixi update
+pyyaml = ">=6.0.0"
+opencv = ">=4.10.0"
+pyautogui = "*"
+pynput = ">=1.7.0"
+python-mss = ">=9.0.0"
+shapely = ">=2.0.0"
+pyclipper = ">=1.0.0"
+
+[pypi-dependencies]
+pyside6-fluent-widgets = ">=1.7.0"
+onnxruntime-directml = ">=1.18.0"
+
+[feature.zzz.dependencies] # ZenlessZoneZero-OneDragon
+pysoundcard = ">=0.4.3"
+librosa = "*"
+gensim = ">=4.3.3"
+
+[feature.zzz.tasks]
+fetch-zzz = "git submodule update --init ZenlessZoneZero-OneDragon"
+env-zzz = { cmd = "powershell -Command \"(Get-Content 'ZenlessZoneZero-OneDragon\\app.bat') | ForEach-Object { \\$_ -replace 'call \\\"%~dp0env.bat\\\"', 'set \\\"PYTHON=$CONDA_PREFIX\\pythonw.exe\\\"' -replace 'set \\\"PYTHONUSERBASE=%~dp0.env\\\"', 'set \\\"PYTHONUSERBASE=$CONDA_PREFIX\\\"' } | Set-Content 'ZenlessZoneZero-OneDragon\\app.bat'\"" }
+start-zzz = { cmd = "powershell -Command \"& {Start-Process 'ZenlessZoneZero-OneDragon\\app.bat' -Verb RunAs }\"", depends-on = ["fetch-zzz", "env-zzz"] }
+
+[feature.hsr.dependencies] # StarRailOneDragon
+scipy = ">=1.13.1"
+numpy = ">=1.26.4"
+requests = ">=2.32.3"
+
+[feature.hsr.tasks]
+fetch-hsr = "git submodule update --init StarRailOneDragon"
+env-hsr = { cmd = "powershell -Command \"(Get-Content 'StarRailOneDragon\\app.bat') | ForEach-Object { \\$_ -replace 'call \\\"%~dp0env.bat\\\"', 'set \\\"PYTHON=$CONDA_PREFIX\\pythonw.exe\\\"' -replace 'set \\\"PYTHONUSERBASE=%~dp0.env\\\"', 'set \\\"PYTHONUSERBASE=$CONDA_PREFIX\\\"' } | Set-Content 'StarRailOneDragon\\app.bat'\"" }
+start-hsr = { cmd = "powershell -Command \"& {Start-Process 'StarRailOneDragon\\app.bat' -Verb RunAs }\"", depends-on = ["fetch-hsr", "env-hsr"] }
+
+[environments]
+default = {features = ["zzz", "hsr"], solve-group = "prod"}
+zzz = {features = ["zzz"], solve-group = "prod"}
+hsr = {features = ["hsr"], solve-group = "prod"}
