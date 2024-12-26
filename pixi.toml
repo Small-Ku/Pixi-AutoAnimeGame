@@ -1,7 +1,7 @@
 [project]
 authors = ["Small_Ku <small_ku@outlook.com>"]
 channels = ["conda-forge"]
-description = "Add a short description here"
+description = "A simple solution to set up automation projects for anime games using Pixi package manager."
 name = "Pixi-AutoAnimeGame"
 platforms = ["win-64"]
 version = "0.1.0"
@@ -29,7 +29,7 @@ librosa = "*"
 gensim = ">=4.3.3"
 
 [feature.zzz.tasks]
-fetch-zzz = "git submodule update --init ZenlessZoneZero-OneDragon"
+fetch-zzz = "git submodule update --init --remote ZenlessZoneZero-OneDragon"
 env-zzz = { cmd = "powershell -Command \"(Get-Content 'ZenlessZoneZero-OneDragon\\app.bat') | ForEach-Object { \\$_ -replace 'call \\\"%~dp0env.bat\\\"', 'set \\\"PYTHON=$CONDA_PREFIX\\pythonw.exe\\\"' -replace 'set \\\"PYTHONUSERBASE=%~dp0.env\\\"', 'set \\\"PYTHONUSERBASE=$CONDA_PREFIX\\\"' } | Set-Content 'ZenlessZoneZero-OneDragon\\app.bat'\"" }
 start-zzz = { cmd = "powershell -Command \"& {Start-Process 'ZenlessZoneZero-OneDragon\\app.bat' -Verb RunAs }\"", depends-on = ["fetch-zzz", "env-zzz"] }
 
@@ -39,7 +39,7 @@ numpy = ">=1.26.4"
 requests = ">=2.32.3"
 
 [feature.hsr.tasks]
-fetch-hsr = "git submodule update --init StarRailOneDragon"
+fetch-hsr = "git submodule update --init --remote StarRailOneDragon"
 env-hsr = { cmd = "powershell -Command \"(Get-Content 'StarRailOneDragon\\app.bat') | ForEach-Object { \\$_ -replace 'call \\\"%~dp0env.bat\\\"', 'set \\\"PYTHON=$CONDA_PREFIX\\pythonw.exe\\\"' -replace 'set \\\"PYTHONUSERBASE=%~dp0.env\\\"', 'set \\\"PYTHONUSERBASE=$CONDA_PREFIX\\\"' } | Set-Content 'StarRailOneDragon\\app.bat'\"" }
 start-hsr = { cmd = "powershell -Command \"& {Start-Process 'StarRailOneDragon\\app.bat' -Verb RunAs }\"", depends-on = ["fetch-hsr", "env-hsr"] }
 
