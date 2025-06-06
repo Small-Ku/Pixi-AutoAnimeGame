@@ -1,6 +1,6 @@
 [submodule "ZenlessZoneZero-OneDragon"]
 	path = ZenlessZoneZero-OneDragon
-	url = https://github.com/DoctorReid/ZenlessZoneZero-OneDragon
+	url = https://github.com/OneDragon-Anything/ZenlessZoneZero-OneDragon.git
 [submodule "StarRailOneDragon"]
 	path = StarRailOneDragon
 	url = https://github.com/DoctorReid/StarRailOneDragon.git
