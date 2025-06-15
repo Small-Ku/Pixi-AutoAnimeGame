@@ -30,8 +30,10 @@ gensim = ">=4.3.3"
 
 [feature.zzz.tasks]
 fetch-zzz = "git submodule update --init --remote ZenlessZoneZero-OneDragon"
-env-zzz = { cmd = "powershell -Command \"(Get-Content 'ZenlessZoneZero-OneDragon\\app.bat') | ForEach-Object { \\$_ -replace 'call \\\"%~dp0env.bat\\\"', 'set \\\"PYTHON=$CONDA_PREFIX\\pythonw.exe\\\"' -replace 'set \\\"PYTHONUSERBASE=%~dp0.env\\\"', 'set \\\"PYTHONUSERBASE=$CONDA_PREFIX\\\"' } | Set-Content 'ZenlessZoneZero-OneDragon\\app.bat'\"" }
-start-zzz = { cmd = "powershell -Command \"& {Start-Process 'ZenlessZoneZero-OneDragon\\app.bat' -Verb RunAs }\"", depends-on = ["fetch-zzz", "env-zzz"] }
+env-zzz = { cmd = "powershell -Command \"(Get-Content 'ZenlessZoneZero-OneDragon\\app.bat') | ForEach-Object { \\$_ -replace 'call \\\"%~dp0env.bat\\\"', 'set \\\"PYTHON=$CONDA_PREFIX\\pythonw.exe\\\"' -replace '%~dp0.env', '$CONDA_PREFIX' } | Set-Content 'ZenlessZoneZero-OneDragon\\app.bat'\"" }
+start-zzz = { cmd = "powershell -Command \"& {Start-Process 'ZenlessZoneZero-OneDragon\\app.bat' -Verb RunAs }\"", depends-on = ["env-zzz"] }
+env-zzz-od = { cmd = "powershell -Command \"(Get-Content 'ZenlessZoneZero-OneDragon\\one_dragon.bat') | ForEach-Object { \\$_ -replace 'call \\\"%~dp0env.bat\\\"', 'set \\\"PYTHON=$CONDA_PREFIX\\pythonw.exe\\\"' -replace '%~dp0.env', '$CONDA_PREFIX' } | Set-Content 'ZenlessZoneZero-OneDragon\\one_dragon.bat'\"" }
+start-zzz-od = { cmd = "powershell -Command \"& {Start-Process 'ZenlessZoneZero-OneDragon\\one_dragon.bat' -Verb RunAs }\"", depends-on = ["env-zzz-od"] }
 
 [feature.hsr.dependencies] # StarRailOneDragon
 scipy = ">=1.13.1"
@@ -40,8 +42,8 @@ requests = ">=2.32.3"
 
 [feature.hsr.tasks]
 fetch-hsr = "git submodule update --init --remote StarRailOneDragon"
-env-hsr = { cmd = "powershell -Command \"(Get-Content 'StarRailOneDragon\\app.bat') | ForEach-Object { \\$_ -replace 'call \\\"%~dp0env.bat\\\"', 'set \\\"PYTHON=$CONDA_PREFIX\\pythonw.exe\\\"' -replace 'set \\\"PYTHONUSERBASE=%~dp0.env\\\"', 'set \\\"PYTHONUSERBASE=$CONDA_PREFIX\\\"' } | Set-Content 'StarRailOneDragon\\app.bat'\"" }
-start-hsr = { cmd = "powershell -Command \"& {Start-Process 'StarRailOneDragon\\app.bat' -Verb RunAs }\"", depends-on = ["fetch-hsr", "env-hsr"] }
+env-hsr = { cmd = "powershell -Command \"(Get-Content 'StarRailOneDragon\\app.bat') | ForEach-Object { \\$_ -replace 'call \\\"%~dp0env.bat\\\"', 'set \\\"PYTHON=$CONDA_PREFIX\\pythonw.exe\\\"' -replace '%~dp0.env', '$CONDA_PREFIX' } | Set-Content 'StarRailOneDragon\\app.bat'\"" }
+start-hsr = { cmd = "powershell -Command \"& {Start-Process 'StarRailOneDragon\\app.bat' -Verb RunAs }\"", depends-on = ["env-hsr"] }
 
 [environments]
 default = {features = ["zzz", "hsr"], solve-group = "prod"}
