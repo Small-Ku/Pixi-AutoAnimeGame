@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set available_tasks=start-zzz start-hsr
+set available_tasks=zzz-app hsr-app zzz-debug hsr-debug
 
 if "%~1"=="" goto prompt_task
 set task=%~1
