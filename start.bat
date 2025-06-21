@@ -1,7 +1,15 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set available_tasks=zzz-app hsr-app zzz-debug hsr-debug
+net session 2>&1
+if %errorlevel% neq 0 (
+    timeout /t 2
+    PowerShell -Command "Start-Process '%~dpnx0' -WorkingDirectory '%~dp0' -Verb RunAs"
+    exit /b
+)
+
+cd /D %~dp0
+set available_tasks=zzz-app hsr-app
 
 if "%~1"=="" goto prompt_task
 set task=%~1
