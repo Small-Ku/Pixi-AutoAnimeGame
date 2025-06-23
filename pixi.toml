@@ -34,7 +34,7 @@ numpy = ">=1.26.4"
 requests = ">=2.32.3"
 
 [feature.zzz.tasks]
-fetch-zzz = "git submodule update --init --remote ZenlessZoneZero-OneDragon"
+fetch-zzz = "git submodule update --depth 1 --single-branch --init --remote ZenlessZoneZero-OneDragon"
 
 [feature.zzz.tasks.zzz-app]
 cmd = "pythonw $PIXI_PROJECT_ROOT\\ZenlessZoneZero-OneDragon\\src\\zzz_od\\gui\\app.py"
@@ -42,7 +42,7 @@ env = { PYTHONPATH = "$PIXI_PROJECT_ROOT\\ZenlessZoneZero-OneDragon\\src" }
 depends-on = ["fetch-zzz"]
 
 [feature.hsr.tasks]
-fetch-hsr = "git submodule update --init --remote StarRailOneDragon"
+fetch-hsr = "git submodule update --depth 1 --single-branch --init --remote StarRailOneDragon"
 
 [feature.hsr.tasks.hsr-app]
 cmd = "pythonw $PIXI_PROJECT_ROOT\\StarRailOneDragon\\src\\sr_od\\gui\\sr_full_app.py"
