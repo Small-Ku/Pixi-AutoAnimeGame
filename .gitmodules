@@ -8,3 +8,8 @@
 	url = https://github.com/DoctorReid/StarRailOneDragon.git
 	branch = main
 	shallow = true
+[submodule "StarRailCopilot"]
+	path = StarRailCopilot
+	url = https://github.com/LmeSzinc/StarRailCopilot.git
+	branch = master
+	shallow = true

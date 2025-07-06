@@ -6,10 +6,10 @@ name = "Pixi-AutoAnimeGame"
 platforms = ["win-64"]
 version = "0.1.0"
 
-[tasks]
-
 [dependencies]
 python = ">=3.11"
+
+[feature.od.dependencies] # OneDragon-Anything
 pyside6 = "==6.8.0.2"  # pin to avoid issues with pixi update
 pyyaml = ">=6.0.0"
 opencv = ">=4.10.0"
@@ -19,37 +19,79 @@ python-mss = ">=9.0.0"
 shapely = ">=2.0.0"
 pyclipper = ">=1.0.0"
 
-[pypi-dependencies]
+[feature.od.pypi-dependencies] # OneDragon-Anything
 pyside6-fluent-widgets = ">=1.7.0"
 onnxruntime-directml = ">=1.18.0"
 
-[feature.zzz.dependencies] # ZenlessZoneZero-OneDragon
+[feature.od-zzz.dependencies] # ZenlessZoneZero-OneDragon
 pysoundcard = ">=0.4.3"
 librosa = "*"
 gensim = ">=4.3.3"
 
-[feature.hsr.dependencies] # StarRailOneDragon
+[feature.od-hsr.dependencies] # StarRailOneDragon
 scipy = ">=1.13.1"
 numpy = ">=1.26.4"
 requests = ">=2.32.3"
 
-[feature.zzz.tasks]
+[feature.src.dependencies]
+pyyaml = "*"
+numpy = ">=1.24.3"
+inflection = "*"
+pydantic = ">=2.4"
+tqdm = "*"
+psutil = ">=5.9.3"
+rich = "*"
+prettytable = ">=2.2.1"
+av = ">=10.0.0"
+wrapt = ">=1.14.0"
+starlette = ">=0.14.2"
+opencv = ">=4.7.0.72"
+scipy = ">=1.10.1"
+aiofiles = "*"
+lz4 = "*"
+pillow = ">=9.5.0"
+jellyfish = "*"
+websockets = ">=12.0,<13"
+
+[feature.src.pypi-dependencies]
+uvicorn = { version = ">=0.17.6", extras = ["standard"] }
+srcmap = ">=2.3.20240701"
+pywebio = ">=1.8.3"
+uiautomator2 = ">=2.16.17"
+uiautomator2cache = ">=0.3.1"
+adbutils = "==1.2.9"
+pponnxcr = "==2.0"
+onepush = ">=1.3.0"
+
+[feature.src-dev.dependencies]
+pynput = "*"
+
+[feature.od-zzz.tasks]
 fetch-zzz = "git submodule update --depth 1 --single-branch --init --remote ZenlessZoneZero-OneDragon"
 
-[feature.zzz.tasks.zzz-app]
+[feature.od-zzz.tasks.zzz-app]
 cmd = "pythonw $PIXI_PROJECT_ROOT\\ZenlessZoneZero-OneDragon\\src\\zzz_od\\gui\\app.py"
 env = { PYTHONPATH = "$PIXI_PROJECT_ROOT\\ZenlessZoneZero-OneDragon\\src" }
 depends-on = ["fetch-zzz"]
 
-[feature.hsr.tasks]
+[feature.od-hsr.tasks]
 fetch-hsr = "git submodule update --depth 1 --single-branch --init --remote StarRailOneDragon"
 
-[feature.hsr.tasks.hsr-app]
+[feature.od-hsr.tasks.hsr-app]
 cmd = "pythonw $PIXI_PROJECT_ROOT\\StarRailOneDragon\\src\\sr_od\\gui\\sr_full_app.py"
 env = { PYTHONPATH = "$PIXI_PROJECT_ROOT\\StarRailOneDragon\\src" }
 depends-on = ["fetch-hsr"]
 
+[feature.src.tasks]
+fetch-src = "git submodule update --depth 1 --single-branch --init --remote StarRailCopilot"
+
+[feature.src.tasks.src-app]
+cmd = "python $PIXI_PROJECT_ROOT\\StarRailCopilot\\gui.py"
+depends-on = ["fetch-src"]
+
 [environments]
-default = { features = ["zzz", "hsr"], solve-group = "prod" }
-zzz = { features = ["zzz"], solve-group = "prod" }
-hsr = { features = ["hsr"], solve-group = "prod" }
+default = { features = ["od", "od-zzz", "od-hsr", "src"], solve-group = "prod" }
+od-zzz = { features = ["od", "od-zzz"], solve-group = "prod" }
+od-hsr = { features = ["od", "od-hsr"], solve-group = "prod" }
+src = { features = ["src"], solve-group = "prod" }
+src-dev = { features = ["src", "src-dev"], solve-group = "prod" }

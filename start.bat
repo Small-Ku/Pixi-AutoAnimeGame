@@ -1,6 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
+:: Actually SRC don't need admin rights, I am just lazy to change this
 net session 2>&1
 if %errorlevel% neq 0 (
     timeout /t 2
@@ -9,7 +10,7 @@ if %errorlevel% neq 0 (
 )
 
 cd /D %~dp0
-set available_tasks=zzz-app hsr-app
+set available_tasks=zzz-app hsr-app src-app
 
 if "%~1"=="" goto prompt_task
 set task=%~1
