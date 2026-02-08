@@ -5,7 +5,7 @@
 	shallow = true
 [submodule "StarRailOneDragon"]
 	path = StarRailOneDragon
-	url = https://github.com/DoctorReid/StarRailOneDragon.git
+	url = https://github.com/OneDragon-Anything/StarRailOneDragon.git
 	branch = main
 	shallow = true
 [submodule "StarRailCopilot"]

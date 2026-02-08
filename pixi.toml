@@ -1,4 +1,4 @@
-[project]
+[workspace]
 authors = ["Small_Ku <small_ku@outlook.com>"]
 channels = ["conda-forge"]
 description = "A simple solution to set up automation projects for anime games using Pixi package manager."
@@ -10,7 +10,6 @@ version = "0.1.0"
 python = ">=3.11"
 
 [feature.od.dependencies] # OneDragon-Anything
-pyside6 = "==6.8.0.2"  # pin to avoid issues with pixi update
 pyyaml = ">=6.0.0"
 opencv = ">=4.10.0"
 pyautogui = "*"
@@ -18,9 +17,11 @@ pynput = ">=1.7.0"
 python-mss = ">=9.0.0"
 shapely = ">=2.0.0"
 pyclipper = ">=1.0.0"
+pygit2 = ">=1.19.0,<2"
 
 [feature.od.pypi-dependencies] # OneDragon-Anything
-pyside6-fluent-widgets = ">=1.7.0"
+pyside6 = "==6.8.0.2"
+pyside6-fluent-widgets = ">=1.7.0,<1.9"
 onnxruntime-directml = ">=1.18.0"
 
 [feature.od-zzz.dependencies] # ZenlessZoneZero-OneDragon
@@ -43,7 +44,7 @@ psutil = ">=5.9.3"
 rich = "*"
 prettytable = ">=2.2.1"
 av = ">=10.0.0"
-wrapt = ">=1.14.0"
+wrapt = "<2"
 starlette = ">=0.14.2"
 opencv = ">=4.7.0.72"
 scipy = ">=1.10.1"
@@ -55,7 +56,7 @@ websockets = ">=12.0,<13"
 
 [feature.src.pypi-dependencies]
 uvicorn = { version = ">=0.17.6", extras = ["standard"] }
-srcmap = ">=2.3.20240701"
+srcmap = "*"
 pywebio = ">=1.8.3"
 uiautomator2 = ">=2.16.17"
 uiautomator2cache = ">=0.3.1"
@@ -67,23 +68,26 @@ onepush = ">=1.3.0"
 pynput = "*"
 
 [feature.od-zzz.tasks]
-fetch-zzz = "git submodule update --depth 1 --single-branch --init --remote ZenlessZoneZero-OneDragon"
+fetch-zzz = "git submodule sync -- ZenlessZoneZero-OneDragon; git submodule update --init --recursive --remote --depth 1 ZenlessZoneZero-OneDragon"
+clean-zzz = "rm -rf ZenlessZoneZero-OneDragon/.log/* ZenlessZoneZero-OneDragon/.debug/images/*"
 
 [feature.od-zzz.tasks.zzz-app]
-cmd = "pythonw $PIXI_PROJECT_ROOT\\ZenlessZoneZero-OneDragon\\src\\zzz_od\\gui\\app.py"
-env = { PYTHONPATH = "$PIXI_PROJECT_ROOT\\ZenlessZoneZero-OneDragon\\src" }
+cmd = "python $APPPATH"
+env = { PYTHONPATH = "$PIXI_PROJECT_ROOT\\ZenlessZoneZero-OneDragon\\src", PYTHON = "$CONDA_PREFIX\\python.exe", MAINPATH = "zzz_od\\gui\\app.py", APPPATH = "$PYTHONPATH\\zzz_od\\gui\\app.py" }
 depends-on = ["fetch-zzz"]
 
 [feature.od-hsr.tasks]
-fetch-hsr = "git submodule update --depth 1 --single-branch --init --remote StarRailOneDragon"
+fetch-hsr = "git submodule sync -- StarRailOneDragon; git submodule update --init --recursive --remote --depth 1 StarRailOneDragon"
+clean-hsr = "rm -rf StarRailOneDragon/.log/* StarRailOneDragon/.debug/images/*"
 
 [feature.od-hsr.tasks.hsr-app]
-cmd = "pythonw $PIXI_PROJECT_ROOT\\StarRailOneDragon\\src\\sr_od\\gui\\sr_full_app.py"
-env = { PYTHONPATH = "$PIXI_PROJECT_ROOT\\StarRailOneDragon\\src" }
+cmd = "python $APPPATH"
+env = { PYTHONPATH = "$PIXI_PROJECT_ROOT\\StarRailOneDragon\\src", PYTHON = "$CONDA_PREFIX\\python.exe", MAINPATH = "sr_od\\gui\\sr_full_app.py", APPPATH = "$PYTHONPATH\\sr_od\\gui\\sr_full_app.py" }
 depends-on = ["fetch-hsr"]
 
 [feature.src.tasks]
-fetch-src = "git submodule update --depth 1 --single-branch --init --remote StarRailCopilot"
+fetch-src = "git submodule sync -- StarRailCopilot; git submodule update --init --recursive --remote --depth 1 StarRailCopilot"
+clean-src = "rm -rf StarRailCopilot/log/*"
 
 [feature.src.tasks.src-app]
 cmd = "python $PIXI_PROJECT_ROOT\\StarRailCopilot\\gui.py"
